@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧺 WashWear LaundryEnv
 
 > An OpenEnv-compliant AI agent training environment built around a real-world laundry marketplace — buy, sell, and rent clothing.
@@ -260,3 +261,6 @@ laundryenv/
 ## License
 
 MIT — built for the Meta OpenEnv Hackathon 🧺
+=======
+# laundryenv
+>>>>>>> be7612cb4a817f2746457e662cc4976b08403d54
