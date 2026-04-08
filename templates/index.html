@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WashWear – Rent, Buy & Sell Clothing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1209;
+    --rust: #C4501A;
+    --sage: #4A6741;
+    --gold: #D4A843;
+    --pale: #EDE8DF;
+    --border: #D6CEBF;
+    --card: #FFFFFF;
+    --text-muted: #7A6F5E;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────────── */
+  nav {
+    background: var(--ink);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: #fff; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--rust);
+    color: #fff;
+    border: none;
+    padding: .5rem 1.25rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: #a83d10; }
+
+  /* ── HERO ────────────────────────────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 64px);
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--ink);
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: -120px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,168,67,.15) 0%, transparent 70%);
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(212,168,67,.12);
+    border: 1px solid rgba(212,168,67,.3);
+    color: var(--gold);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: .4rem .9rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+  .hero-tag::before { content: '✦'; font-size: .65rem; }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline .accent { color: var(--gold); }
+  .hero-sub {
+    color: #aaa;
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--rust);
+    color: #fff;
+    border: none;
+    padding: .85rem 2rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .btn-primary:hover { background: #a83d10; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,.3);
+    padding: .85rem 2rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label { color: #888; font-size: .8rem; text-transform: uppercase; letter-spacing: .5px; }
+
+  .hero-right {
+    background: var(--pale);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .clothing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 3rem;
+    transform: rotate(-2deg);
+  }
+  .cloth-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    animation: floatCard 4s ease-in-out infinite;
+  }
+  .cloth-card:nth-child(2) { animation-delay: .5s; margin-top: 20px; }
+  .cloth-card:nth-child(3) { animation-delay: 1s; }
+  .cloth-card:nth-child(4) { animation-delay: 1.5s; margin-top: -10px; }
+  .cloth-card:nth-child(5) { animation-delay: 2s; margin-top: 15px; }
+  .cloth-card:nth-child(6) { animation-delay: 2.5s; }
+  @keyframes floatCard {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .cloth-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .cloth-meta { padding: .6rem .75rem; }
+  .cloth-name { font-size: .7rem; font-weight: 600; color: var(--ink); }
+  .cloth-price { font-size: .75rem; font-weight: 700; color: var(--rust); margin-top: .1rem; }
+  .cloth-badge {
+    display: inline-block;
+    padding: .15rem .45rem;
+    border-radius: 100px;
+    font-size: .6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-top: .2rem;
+  }
+  .badge-rent { background: #e8f4e8; color: var(--sage); }
+  .badge-sell { background: #fff0e8; color: var(--rust); }
+  .badge-buy  { background: #fff8e0; color: #a07700; }
+
+  /* ── LISTINGS ────────────────────────────────── */
+  section { padding: 5rem 4rem; }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .section-title small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: .25rem;
+  }
+  .view-all {
+    color: var(--rust);
+    text-decoration: none;
+    font-size: .875rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--rust);
+    padding-bottom: 2px;
+    transition: color .2s;
+  }
+  .view-all:hover { color: #a83d10; }
+
+  .filter-bar {
+    display: flex;
+    gap: .75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: .45rem 1.1rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--text-muted);
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+  .listing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .25s;
+    position: relative;
+  }
+  .listing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,.1);
+    border-color: transparent;
+  }
+  .listing-img {
+    height: 200px;
+    background: var(--pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .listing-img-bg {
+    position: absolute;
+    inset: 0;
+    opacity: .04;
+    font-size: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .listing-type-badge {
+    position: absolute;
+    top: .75rem;
+    left: .75rem;
+    padding: .25rem .65rem;
+    border-radius: 100px;
+    font-size: .65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .listing-fav {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    background: rgba(255,255,255,.9);
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s;
+  }
+  .listing-fav:hover { transform: scale(1.15); }
+  .listing-body { padding: 1rem 1.1rem 1.25rem; }
+  .listing-name {
+    font-weight: 600;
+    font-size: .95rem;
+    color: var(--ink);
+    margin-bottom: .25rem;
+  }
+  .listing-category {
+    color: var(--text-muted);
+    font-size: .75rem;
+    text-transform: capitalize;
+    margin-bottom: .75rem;
+  }
+  .listing-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .listing-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .listing-price sub { font-size: .65rem; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+  .add-to-cart {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: .45rem .9rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .add-to-cart:hover { background: var(--rust); }
+  .listing-condition {
+    display: flex;
+    gap: .25rem;
+    margin-bottom: .5rem;
+  }
+  .condition-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .condition-dot.filled { background: var(--sage); }
+
+  /* ── HOW IT WORKS ────────────────────────────── */
+  .how-section { background: var(--ink); }
+  .how-section .section-title { color: #fff; }
+  .how-section .section-title small { color: #888; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .step-card {
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 2rem 1.75rem;
+    background: rgba(255,255,255,.03);
+    transition: background .25s;
+  }
+  .step-card:hover { background: rgba(255,255,255,.06); }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: .3;
+    margin-bottom: .5rem;
+  }
+  .step-icon { font-size: 2rem; margin-bottom: .75rem; }
+  .step-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: .5rem; }
+  .step-desc { color: #888; font-size: .875rem; line-height: 1.65; }
+
+  /* ── ENV DEMO ────────────────────────────────── */
+  .demo-section { background: var(--pale); border-top: 1px solid var(--border); }
+  .demo-panel {
+    background: var(--ink);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .demo-toolbar {
+    background: #2a2018;
+    padding: .75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .demo-title { color: #888; font-size: .8rem; margin-left: .5rem; }
+  .demo-body { padding: 1.5rem; }
+  .demo-task-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+  .demo-tab {
+    padding: .45rem 1rem;
+    border-radius: 4px;
+    background: rgba(255,255,255,.06);
+    color: #888;
+    font-size: .78rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all .2s;
+  }
+  .demo-tab.active { background: var(--rust); color: #fff; }
+  .demo-tab:hover:not(.active) { background: rgba(255,255,255,.1); color: #ccc; }
+  .demo-code {
+    background: #0f0a04;
+    border-radius: 8px;
+    padding: 1.25rem;
+    font-family: 'Courier New', monospace;
+    font-size: .78rem;
+    color: #a0c070;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code-comment { color: #555; }
+  .code-key { color: #d4a843; }
+  .code-val { color: #7fbfff; }
+  .code-str { color: #a0e070; }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  footer {
+    background: #110d06;
+    color: #666;
+    padding: 3rem 4rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.75rem; display: block; margin-bottom: .75rem; }
+  .footer-desc { font-size: .85rem; line-height: 1.7; }
+  .footer-col h4 { color: #aaa; font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+  .footer-col a { display: block; color: #666; text-decoration: none; font-size: .85rem; margin-bottom: .5rem; transition: color .2s; }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    background: #0a0703;
+    text-align: center;
+    padding: 1.25rem;
+    color: #444;
+    font-size: .78rem;
+    border-top: 1px solid #1a1408;
+  }
+
+  /* ── MODAL ───────────────────────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+    animation: modalIn .3s ease;
+  }
+  @keyframes modalIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: .5rem; }
+  .modal p { color: var(--text-muted); font-size: .9rem; margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-group label { display: block; font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .5px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: .7rem .9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    background: #fff;
+    color: var(--ink);
+    transition: border .2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .modal-footer { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .btn-cancel { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); padding: .7rem 1.5rem; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; transition: all .2s; }
+  .btn-cancel:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-submit { background: var(--rust); color: #fff; border: none; padding: .7rem 1.5rem; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; flex: 1; transition: background .2s; }
+  .btn-submit:hover { background: #a83d10; }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--ink);
+    color: #fff;
+    padding: .9rem 1.5rem;
+    border-radius: 8px;
+    font-size: .875rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    z-index: 300;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast .toast-icon { margin-right: .5rem; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    section { padding: 3rem 1.5rem; }
+    footer { grid-template-columns: 1fr 1fr; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Wash<span>Wear</span></div>
+  <ul class="nav-links">
+    <li><a href="#listings">Browse</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#demo">AI Demo</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal('sell')">List an Item</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <span class="hero-tag">Sustainable Fashion Marketplace</span>
+    <h1 class="hero-headline">
+      Wear More,<br>
+      Waste <span class="accent">Less.</span>
+    </h1>
+    <p class="hero-sub">
+      Buy pre-loved clothes, rent outfits for any occasion, or sell items you no longer wear. 
+      Professional laundry care included with every rental.
+    </p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-primary">🛍️ Shop Now</a>
+      <a href="#" class="btn-outline" onclick="openModal('rent')">👗 Rent an Outfit</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12k+</div>
+        <div class="stat-label">Active Listings</div>
+      </div>
+      <div>
+        <div class="stat-num">4.8★</div>
+        <div class="stat-label">Avg Rating</div>
+      </div>
+      <div>
+        <div class="stat-num">3-day</div>
+        <div class="stat-label">Fast Returns</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="clothing-grid">
+      <div class="cloth-card"><div class="cloth-img" style="background:#f0ebe0">👗</div><div class="cloth-meta"><div class="cloth-name">Summer Dress</div><div class="cloth-price">₹320/day</div><span class="cloth-badge badge-rent">Rent</span></div></div>
+      <div class="cloth-card"><div class="cloth-img" style="background:#e8f0f0">🧥</div><div class="cloth-meta"><div class="cloth-name">Winter Coat</div><div class="cloth-price">₹1,200</div><span class="cloth-badge badge-sell">Sell</span></div></div>
+      <div class="cloth-card"><div class="cloth-img" style="background:#f0e8e8">👕</div><div class="cloth-meta"><div class="cloth-name">Linen Shirt</div><div class="cloth-price">₹450</div><span class="cloth-badge badge-sell">Sell</span></div></div>
+      <div class="cloth-card"><div class="cloth-img" style="background:#e8f0e8">👖</div><div class="cloth-meta"><div class="cloth-name">Slim Jeans</div><div class="cloth-price">₹599</div><span class="cloth-badge badge-sell">Sell</span></div></div>
+      <div class="cloth-card"><div class="cloth-img" style="background:#f0ece8">🥻</div><div class="cloth-meta"><div class="cloth-name">Silk Saree</div><div class="cloth-price">₹800/day</div><span class="cloth-badge badge-rent">Rent</span></div></div>
+      <div class="cloth-card"><div class="cloth-img" style="background:#ece8f0">🧣</div><div class="cloth-meta"><div class="cloth-name">Cashmere Wrap</div><div class="cloth-price">₹380</div><span class="cloth-badge badge-buy">Wanted</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section id="listings">
+  <div class="section-header">
+    <div>
+      <div class="section-title">
+        <small>Discover</small>
+        Featured Listings
+      </div>
+    </div>
+    <a href="#" class="view-all">View all items →</a>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterItems('all', this)">All Items</button>
+    <button class="filter-btn" onclick="filterItems('sell', this)">Buy</button>
+    <button class="filter-btn" onclick="filterItems('rent', this)">Rent</button>
+    <button class="filter-btn" onclick="filterItems('shirt', this)">Shirts</button>
+    <button class="filter-btn" onclick="filterItems('pants', this)">Pants</button>
+    <button class="filter-btn" onclick="filterItems('dress', this)">Dresses</button>
+    <button class="filter-btn" onclick="filterItems('jacket', this)">Jackets</button>
+  </div>
+  <div class="listings-grid" id="listingsGrid"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-title">
+    <small style="color:#555">Simple Process</small>
+    How WashWear Works
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Browse Listings</div>
+      <div class="step-desc">Filter by category, size, condition, or price. Save favourites and compare options.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">📦</div>
+      <div class="step-title">Order & Pay Securely</div>
+      <div class="step-desc">Buy outright, rent for a set period, or post a buy request. Payments are escrowed until delivery.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">🧺</div>
+      <div class="step-title">Professional Clean</div>
+      <div class="step-desc">Every rental item is dry-cleaned and packaged before dispatch. Returns include free laundry.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-icon">⭐</div>
+      <div class="step-title">Review & Repeat</div>
+      <div class="step-desc">Rate your experience. Build your wardrobe sustainably while earning from items you no longer wear.</div>
+    </div>
+  </div>
+</section>
+
+<!-- AI ENV DEMO -->
+<section class="demo-section" id="demo">
+  <div class="section-title" style="text-align:center;margin-bottom:1rem;">
+    <small>OpenEnv Hackathon</small>
+    AI Agent Playground
+  </div>
+  <p style="text-align:center;color:var(--text-muted);max-width:500px;margin:0 auto 2.5rem;font-size:.95rem;">
+    WashWear includes a full OpenEnv-compliant simulation. Train and evaluate AI agents on real marketplace tasks.
+  </p>
+  <div class="demo-panel">
+    <div class="demo-toolbar">
+      <div class="demo-dot" style="background:#ff5f57"></div>
+      <div class="demo-dot" style="background:#ffbd2e"></div>
+      <div class="demo-dot" style="background:#28c840"></div>
+      <span class="demo-title">LaundryEnv — OpenEnv Interface</span>
+    </div>
+    <div class="demo-body">
+      <div class="demo-task-tabs">
+        <button class="demo-tab active" onclick="showCode('easy', this)">🟢 Easy: Order Triage</button>
+        <button class="demo-tab" onclick="showCode('medium', this)">🟡 Medium: Inventory</button>
+        <button class="demo-tab" onclick="showCode('hard', this)">🔴 Hard: Support</button>
+      </div>
+      <div class="demo-code" id="demoCode"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SELL MODAL -->
+<div class="modal-overlay" id="sellModal">
+  <div class="modal">
+    <h2>List Your Item</h2>
+    <p>Fill in the details below to list your clothing item for sale or rent.</p>
+    <div class="form-group">
+      <label>Item Name</label>
+      <input type="text" placeholder="e.g. Blue Denim Jacket"/>
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select>
+        <option>Shirt</option><option>Pants</option><option>Dress</option>
+        <option>Jacket</option><option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Listing Type</label>
+      <select>
+        <option>Sell</option><option>Rent</option><option>Buy Request</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Price (₹)</label>
+      <input type="number" placeholder="0.00"/>
+    </div>
+    <div class="form-group">
+      <label>Condition</label>
+      <select>
+        <option>New</option><option>Like New</option><option>Good</option>
+        <option>Fair</option><option>Poor</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('sell')">Cancel</button>
+      <button class="btn-submit" onclick="submitListing()">List Item ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- RENT MODAL -->
+<div class="modal-overlay" id="rentModal">
+  <div class="modal">
+    <h2>Rent an Outfit</h2>
+    <p>Tell us what you need and we'll match you with available items.</p>
+    <div class="form-group">
+      <label>Occasion</label>
+      <select>
+        <option>Wedding / Formal</option><option>Party / Night out</option>
+        <option>Business</option><option>Casual</option><option>Sports</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Rental Period</label>
+      <select>
+        <option>1 day</option><option>3 days</option><option>1 week</option>
+        <option>2 weeks</option><option>1 month</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Max Budget (₹/day)</label>
+      <input type="number" placeholder="500"/>
+    </div>
+    <div class="form-group">
+      <label>Special Requests</label>
+      <textarea rows="2" placeholder="Size, colour preference, style notes…" style="resize:vertical"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal('rent')">Cancel</button>
+      <button class="btn-submit" onclick="submitRent()">Find Outfits →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="nav-logo">Wash<span>Wear</span></span>
+    <p class="footer-desc">India's most trusted platform for sustainable fashion — buy, sell, rent, and repeat.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Marketplace</h4>
+    <a href="#">Browse All</a>
+    <a href="#">Sell an Item</a>
+    <a href="#">Rent Outfits</a>
+    <a href="#">Buy Requests</a>
+  </div>
+  <div class="footer-col">
+    <h4>Company</h4>
+    <a href="#">About Us</a>
+    <a href="#">Blog</a>
+    <a href="#">Sustainability</a>
+    <a href="#">Careers</a>
+  </div>
+  <div class="footer-col">
+    <h4>Support</h4>
+    <a href="#">Help Centre</a>
+    <a href="#">Returns Policy</a>
+    <a href="#">Contact Us</a>
+    <a href="#">Track Order</a>
+  </div>
+</footer>
+<div class="footer-bottom">© 2025 WashWear · OpenEnv Hackathon Project · Built with ♻️</div>
+
+<script>
+// ── Listings Data ──────────────────────────────────────────────
+const ITEMS = [
+  { id:'ITM001', name:'Blue Jeans',       cat:'pants',  cond:'good',     type:'sell', price:599,  emoji:'👖', bg:'#e8eef5' },
+  { id:'ITM002', name:'White Linen Shirt',cat:'shirt',  cond:'like_new', type:'sell', price:450,  emoji:'👕', bg:'#f5f5f0' },
+  { id:'ITM003', name:'Summer Dress',     cat:'dress',  cond:'new',      type:'rent', price:320,  emoji:'👗', bg:'#f5f0e8' },
+  { id:'ITM004', name:'Winter Jacket',    cat:'jacket', cond:'good',     type:'sell', price:1800, emoji:'🧥', bg:'#e8f0ee' },
+  { id:'ITM005', name:'Sports Leggings',  cat:'pants',  cond:'new',      type:'sell', price:380,  emoji:'🩱', bg:'#ede8f5' },
+  { id:'ITM006', name:'Silk Kurta',       cat:'shirt',  cond:'like_new', type:'rent', price:550,  emoji:'🥼', bg:'#f5ece8' },
+  { id:'ITM007', name:'Floral Maxi Dress',cat:'dress',  cond:'good',     type:'rent', price:400,  emoji:'🌸', bg:'#f0f5e8' },
+  { id:'ITM008', name:'Denim Jacket',     cat:'jacket', cond:'fair',     type:'sell', price:750,  emoji:'🧣', bg:'#e8edf5' },
+];
+
+const COND_DOTS = { new:5, like_new:4, good:3, fair:2, poor:1 };
+const TYPE_COLORS = { sell:'badge-sell', rent:'badge-rent', buy_request:'badge-buy' };
+const TYPE_LABEL  = { sell:'For Sale', rent:'Rent', buy_request:'Wanted' };
+
+function condDots(cond) {
+  const n = COND_DOTS[cond] || 3;
+  return Array(5).fill('').map((_,i)=>`<div class="condition-dot${i<n?' filled':''}"></div>`).join('');
+}
+
+function renderCard(item) {
+  return `<div class="listing-card" data-type="${item.type}" data-cat="${item.cat}">
+    <div class="listing-img" style="background:${item.bg}">
+      <span>${item.emoji}</span>
+      <div class="listing-img-bg">${item.emoji}</div>
+      <span class="listing-type-badge ${TYPE_COLORS[item.type]}">${TYPE_LABEL[item.type]}</span>
+      <button class="listing-fav" onclick="toggleFav(this, event)">🤍</button>
+    </div>
+    <div class="listing-body">
+      <div class="listing-condition">${condDots(item.cond)}</div>
+      <div class="listing-name">${item.name}</div>
+      <div class="listing-category">${item.cat} · ${item.cond.replace('_',' ')}</div>
+      <div class="listing-footer">
+        <div class="listing-price">₹${item.price.toLocaleString()}<sub>${item.type==='rent'?'/day':''}</sub></div>
+        <button class="add-to-cart" onclick="addToCart('${item.name}', event)">${item.type==='rent'?'Book':'Buy'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderAll(filter) {
+  const grid = document.getElementById('listingsGrid');
+  const shown = filter==='all' ? ITEMS : ITEMS.filter(i => i.type===filter || i.cat===filter);
+  grid.innerHTML = shown.map(renderCard).join('');
+}
+
+function filterItems(f, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll(f);
+}
+
+function toggleFav(btn, e) {
+  e.stopPropagation();
+  btn.textContent = btn.textContent==='🤍'?'❤️':'🤍';
+  showToast(btn.textContent==='❤️'?'Added to wishlist!':'Removed from wishlist');
+}
+
+function addToCart(name, e) {
+  e.stopPropagation();
+  showToast(`${name} added to cart! 🛍️`);
+}
+
+// ── Modals ────────────────────────────────────────────────────
+function openModal(type) {
+  document.getElementById(type+'Modal').classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById(type+'Modal').classList.remove('open');
+}
+function submitListing() {
+  closeModal('sell');
+  showToast('Your item has been listed! ✓');
+}
+function submitRent() {
+  closeModal('rent');
+  showToast('Finding matching outfits… 👗');
+}
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); });
+});
+
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ── Demo Code ────────────────────────────────────────────────
+const CODES = {
+  easy: `<span class="code-comment"># Task 1: Easy – Order Triage</span>
+<span class="code-key">from</span> env.laundry_env <span class="code-key">import</span> LaundryEnv
+<span class="code-key">from</span> env.models <span class="code-key">import</span> Action
+
+env = LaundryEnv(<span class="code-str">task_id="task_easy"</span>)
+obs = env.reset()
+
+<span class="code-comment"># Route the urgent complaint first (bonus!)</span>
+action = Action(
+    action_type=<span class="code-str">"route_order"</span>,
+    payload={
+        <span class="code-str">"order_id"</span>: <span class="code-str">"ORD002"</span>,
+        <span class="code-str">"department"</span>: <span class="code-str">"support"</span>  <span class="code-comment"># complaint → support</span>
+    }
+)
+obs, reward, done, info = env.step(action)
+<span class="code-comment"># reward.value = 0.15  (urgent bonus!)</span>
+<span class="code-comment"># reward.reason = "Correctly routed ORD002 to support."</span>
+
+final = env.final_grade()
+<span class="code-comment"># { "final_score": 0.85, "steps_taken": 5 }</span>`,
+
+  medium: `<span class="code-comment"># Task 2: Medium – Inventory Management</span>
+env = LaundryEnv(<span class="code-str">task_id="task_medium"</span>)
+obs = env.reset()
+
+<span class="code-comment"># Restock out-of-stock items within budget</span>
+env.step(Action(action_type=<span class="code-str">"restock_item"</span>,
+    payload={<span class="code-str">"item_id"</span>: <span class="code-str">"ITM001"</span>, <span class="code-str">"quantity"</span>: 5}))
+
+<span class="code-comment"># Fix overpriced white shirt (₹40 vs market ₹35)</span>
+env.step(Action(action_type=<span class="code-str">"update_price"</span>,
+    payload={<span class="code-str">"item_id"</span>: <span class="code-str">"ITM002"</span>, <span class="code-str">"new_price"</span>: <span class="code-val">35.0</span>}))
+
+<span class="code-comment"># Remove overstocked summer dress (12 items, ideal: 4)</span>
+env.step(Action(action_type=<span class="code-str">"remove_listing"</span>,
+    payload={<span class="code-str">"item_id"</span>: <span class="code-str">"ITM003"</span>}))
+
+final = env.final_grade()
+<span class="code-comment"># { "final_score": 0.78, breakdown: {...} }</span>`,
+
+  hard: `<span class="code-comment"># Task 3: Hard – Customer Support Resolution</span>
+env = LaundryEnv(<span class="code-str">task_id="task_hard"</span>)
+obs = env.reset()
+
+<span class="code-comment"># Ticket MSG001: Lost jacket → full refund</span>
+env.step(Action(action_type=<span class="code-str">"issue_refund"</span>,
+    payload={<span class="code-str">"customer_id"</span>: <span class="code-str">"CUST_A"</span>,
+             <span class="code-str">"message_id"</span>: <span class="code-str">"MSG001"</span>,
+             <span class="code-str">"amount"</span>: <span class="code-val">45.0</span>}))
+
+env.step(Action(action_type=<span class="code-str">"send_message"</span>,
+    payload={<span class="code-str">"customer_id"</span>: <span class="code-str">"CUST_A"</span>,
+             <span class="code-str">"message"</span>: <span class="code-str">"We're sorry for the issue. Full refund issued."</span>}))
+
+env.step(Action(action_type=<span class="code-str">"mark_resolved"</span>,
+    payload={<span class="code-str">"message_id"</span>: <span class="code-str">"MSG001"</span>}))
+
+final = env.final_grade()
+<span class="code-comment"># { "final_score": 0.91, tickets resolved: 3/3 }</span>`
+};
+
+function showCode(key, btn) {
+  document.querySelectorAll('.demo-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('demoCode').innerHTML = CODES[key];
+}
+
+// ── Init ─────────────────────────────────────────────────────
+renderAll('all');
+showCode('easy', document.querySelector('.demo-tab'));
+</script>
+</body>
+</html>

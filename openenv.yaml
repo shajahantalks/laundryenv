@@ -1,0 +1,42 @@
+name: laundry-marketplace-env
+version: "1.0.0"
+description: >
+  A real-world laundry marketplace simulation where agents manage buying,
+  selling, and renting clothing items. Tasks include order triage, inventory
+  management, and customer support — mirroring actual e-commerce operations.
+tags:
+  - openenv
+  - marketplace
+  - e-commerce
+  - real-world
+author: LaundryEnv Team
+tasks:
+  - id: task_easy
+    name: Order Triage
+    difficulty: easy
+    description: Classify and route incoming laundry orders to the correct department.
+  - id: task_medium
+    name: Inventory Management
+    difficulty: medium
+    description: Restock items, handle returns, and optimize listing prices.
+  - id: task_hard
+    name: Customer Support Resolution
+    difficulty: hard
+    description: Resolve multi-step customer complaints involving refunds, lost items, and disputes.
+observation_space:
+  type: dict
+  fields:
+    - marketplace_state
+    - pending_orders
+    - inventory
+    - customer_messages
+    - current_task
+action_space:
+  type: dict
+  fields:
+    - action_type
+    - payload
+reward:
+  min: 0.0
+  max: 1.0
+  type: float
